@@ -156,22 +156,3 @@ def calc(input):
     elif number2 != "":
         number1 = number2
     return number1
-        
-        
-        
-print(calc("(3)*4+3"))
-index = 0        
-print(calc("5*5+5"))
-index = 0
-print(calc("2*2+2"))
-index = 0
-print(calc("2+2+(2)"))
-index = 0
-print(calc("3-2.7*3.456"))
-index = 0
-print(calc("5*5+3"))
-index = 0
-print(calc("3+(7*4)+(9+3)"))
-index = 0
-print(calc("3+6+(7)+(8)"))
-index = 0
