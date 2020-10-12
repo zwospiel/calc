@@ -1,6 +1,6 @@
 ## TODO for GUI: most double operators (except *-) are not allowed as input
-## TODO: sqrt sqrt oder sin sin würde probleme machen -> ebenfalls gui solving? ; rückwärts ????
-#?: Index auf 0 setzen; wie außerhalb der Methode?
+## TODO: sqrt sqrt oder sin sin wuerde probleme machen -> ebenfalls gui solving? ; rueckwaerts ????
+#?: Index auf 0 setzen; wie ausserhalb der Methode?
 #?: a cute tea expert looks at your code, what you do?
 #?: multiplication: can if-flow be tidied up for better viewing? how can i improve the arrangement of my arguments?
 
