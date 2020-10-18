@@ -12,7 +12,7 @@ class invalid_inputs(unittest.TestCase):
   def test_that_commas_raise_value_errors(self):
     self.assertRaises(ValueError, calc, "3,14")
 
-  def test_that_incorrect_parenthesis_raise_format_errors(self):
+  def test_that_incorrect_parenthesis_raise_value_errors(self):
     incorrect_parenthesis = [
       "(", ")", "())", "(()",
       "(3+4", "3+4)", "(3+4))", "((3+4)",
@@ -20,7 +20,7 @@ class invalid_inputs(unittest.TestCase):
     ]
 
     for input in incorrect_parenthesis:
-      self.assertRaises(FormatError, calc, input)
+      self.assertRaises(ValueError, calc, input)
 
 class single_number_inputs(unittest.TestCase):
   def test_that_single_digit_integers_return_themselves(self):
