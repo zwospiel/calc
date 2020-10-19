@@ -4,6 +4,7 @@ import unittest
 def call_parse(formula):
   return calc(formula)
 
+
 class invalid_inputs(unittest.TestCase):
   def test_that_non_string_inputs_raise_type_errors(self):
     for input in [True, 0, -1, 1.2]:
@@ -25,6 +26,7 @@ class invalid_inputs(unittest.TestCase):
     for input in incorrect_parenthesis:
       self.assertRaises(ValueError, calc, input)
 
+
 class single_number_inputs(unittest.TestCase):
   def test_that_single_digit_integers_return_themselves(self):
     self.assertEquals(call_parse("3"), "3")
@@ -40,12 +42,14 @@ class single_number_inputs(unittest.TestCase):
     self.assertEquals(call_parse("-34"), "-34")
     self.assertEquals(call_parse("-2.72"), "-2.72")
 
+
 class redundant_parenthesis(unittest.TestCase):
   def test_that_single_redudant_parenthesis_get_resolved(self):
     self.assertEquals(call_parse("(34)"), "34")
 
   def test_that_multiple_redudant_parenthesis_get_resolved(self):
     self.assertEquals(call_parse("(((34)))"), "34")
+
 
 if __name__ == '__main__':
     unittest.main()
