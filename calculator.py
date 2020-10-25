@@ -76,9 +76,9 @@ def parse(input):
     # each number in the string is divided by an operator, which I use to identify them
 
     position = 0
-    go = "off" 
-    # if we have read a * or /, we will do an operation after the next number
-    # specified by go = "on"
+    found_operator = False 
+    # if we have read a * or /, we will do an calculation after the next number
+    # specified by found_operator = True
     
     # leading minus in the first position
     if (input[position] == "-" and number1 == "" and number2 == ""):
@@ -90,33 +90,33 @@ def parse(input):
         if input[position] == ")":
             break
         # * or / : 
-        # for go = "off"
-        if ((input[position] == "*" or input[position] == "/") and go == "off"):
+        # for found_operator = False
+        if ((input[position] == "*" or input[position] == "/") and not found_operator):
             number1 = number2
             number2 = ""
             operator = input[position]
-            go = "on"
-        # for go = "on"
-        elif ((input[position] == "*" or input[position] == "/") and go == "on"):
+            found_operator = True
+        # for found_operator = True
+        elif ((input[position] == "*" or input[position] == "/") and found_operator):
             input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
             operator = input[position]
             number2 = ""
         # for *- or /- cases
         elif (input[position] == "-" and (input[position-1] == "*" or input[position-1] == "/") and (position > 0)):
             number2 += "-"
-        # no new * or /, resolving go = "on"
-        elif ((input[position] == "+" or input[position] == "-") and go == "on"):
+        # no new * or /, resolving found_operator = True
+        elif ((input[position] == "+" or input[position] == "-") and found_operator):
             input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
             number2 = ""
-            go = "off"
-        elif ((input[position] == "+" or input[position] == "-") and go == "off"):
+            found_operator = False
+        elif ((input[position] == "+" or input[position] == "-") and not found_operator):
             number2 = ""
         else:
             # add current position to number if no operator
             number2 += input[position]
         position +=1
     # if last operator was * or /
-    if go == "on":
+    if found_operator:
         input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
 
     number1 = ""
