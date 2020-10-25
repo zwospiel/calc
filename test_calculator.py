@@ -1,8 +1,8 @@
-from calc import calc
+from calculator import parse
 import unittest
 
 def call_parse(formula):
-  return calc(formula)
+  return parse(formula)
 
 
 class invalid_inputs(unittest.TestCase):
@@ -24,7 +24,7 @@ class invalid_inputs(unittest.TestCase):
     ]
 
     for input in incorrect_parenthesis:
-      self.assertRaises(ValueError, calc, input)
+      self.assertRaises(ValueError, call_parse, input)
 
 
 class single_number_inputs(unittest.TestCase):

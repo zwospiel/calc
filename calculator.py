@@ -9,7 +9,7 @@ import math
 # global index to be used by the recursion; will get dynamically changed by length of the result
 index = 0
 
-# calculation handler
+# parseulation handler
 def Solver(operator, one, two):
     # case of single operator; not giving 0 into the function (for empty second operator) 
     # because i want len(two) to be 0 in inputcutter
@@ -44,7 +44,7 @@ def inputCutter(input, startingIndex, operator, one, two = ""):
     input = input[0:startingIndex-len(result)] + result + input[currentIndex:] 
     return input, startingIndex, result # result returned in case of further operations
     
-def calc(input):
+def parse(input):
     #?: startingindex + index too complicated?
     global index
     number1 = ""
@@ -56,7 +56,7 @@ def calc(input):
     while startingIndex < len(input):
         if input[startingIndex] == "(":
             # recursion for each open bracket until first ")"
-            result = calc(input[index+1:])
+            result = parse(input[index+1:])
             # index is counting globally, so we know where the rescursion ends 
             # and can cut up the index accordingly
             input = input[0:startingIndex] + result + input[index+1:]
