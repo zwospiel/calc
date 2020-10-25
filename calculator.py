@@ -1,13 +1,15 @@
+# Idea::::?:::!
+
 ## TODO for GUI: most double operators (except *-) are not allowed as input
 ## TODO: sqrt sqrt oder sin sin wuerde probleme machen -> ebenfalls gui solving? ; rueckwaerts ????
-#?: Index auf 0 setzen; wie ausserhalb der Methode?
+#?: position_of_result auf 0 setzen; wie ausserhalb der Methode?
 #?: a cute tea expert looks at your code, what you do?
 #?: multiplication: can if-flow be tidied up for better viewing? 
 # how can i improve the arrangement of my arguments?
 
 import math
 # global index to be used by the recursion; will get dynamically changed by length of the result
-index = 0
+position_of_result = 0
 
 # parseulation handler
 def solve(operator, one, two):
@@ -34,88 +36,88 @@ def solve(operator, one, two):
     # potential reconversion to int somewhere to avoid dirty .0 ints
 
 
-def replace_formula_with_result(input, startingIndex, operator, one, two = ""):
+def replace_formula_with_result(input, position, operator, one, two = ""):
     # solve operation
     result = solve(operator, one, two)
-    # save latest position in the index
-    currentIndex = startingIndex
+    # save latest position in the position_of_result
+    currentIndex = position
     # we remove the operator and number(s) and instead insert the result
-    startingIndex = startingIndex-len(one)-len(operator)-len(two)+len(result) # want to restart after the result
-    input = input[0:startingIndex-len(result)] + result + input[currentIndex:] 
-    return input, startingIndex, result # result returned in case of further operations
+    position = position-len(one)-len(operator)-len(two)+len(result) # want to restart after the result
+    input = input[0:position-len(result)] + result + input[currentIndex:] 
+    return input, position, result # result returned in case of further operations
     
 def parse(input):
-    #?: startingindex + index too complicated?
-    global index
+    #?: position + index too complicated?
+    global position_of_result
     number1 = ""
     number2 = ""
     operator = ""
-    startingIndex = 0
+    position = 0
     
-    # brackets; only here are we counting index for recursion
-    while startingIndex < len(input):
-        if input[startingIndex] == "(":
+    # brackets; only here are we counting position_of_result for recursion
+    while position < len(input):
+        if input[position] == "(":
             # recursion for each open bracket until first ")"
-            result = parse(input[index+1:])
-            # index is counting globally, so we know where the rescursion ends 
-            # and can cut up the index accordingly
-            input = input[0:startingIndex] + result + input[index+1:]
-            index = index - (index  - len(result) - startingIndex)
-            startingIndex += len(result)
-        elif input[startingIndex] == ")":
-            startingIndex = len(input)
-            index += 1
+            result = parse(input[position_of_result+1:])
+            # position_of_result is counting globally, so we know where the rescursion ends 
+            # and can cut up the position_of_result accordingly
+            input = input[0:position] + result + input[position_of_result+1:]
+            position_of_result = position_of_result - (position_of_result  - len(result) - position)
+            position += len(result)
+        elif input[position] == ")":
+            position = len(input)
+            position_of_result += 1
             break
-        index += 1
-        startingIndex += 1
+        position_of_result += 1
+        position += 1
 
 
     # multiplication
     # each number in the string is divided by an operator, which I use to identify them
 
-    startingIndex = 0
-    go = "off" 
-    # if we have read a * or /, we will do an operation after the next number
-    # specified by go = "on"
+    position = 0
+    found_operator = False 
+    # if we have read a * or /, we will do an calculation after the next number
+    # specified by found_operator = True
     
     # leading minus in the first position
-    if (input[startingIndex] == "-" and number1 == "" and number2 == ""):
+    if (input[position] == "-" and number1 == "" and number2 == ""):
         number2 += "-"
-        startingIndex+=1
+        position+=1
 
-    while startingIndex < len(input):
+    while position < len(input):
         # end of recursion
-        if input[startingIndex] == ")":
+        if input[position] == ")":
             break
         # * or / : 
-        # for go = "off"
-        if ((input[startingIndex] == "*" or input[startingIndex] == "/") and go == "off"):
+        # for found_operator = False
+        if ((input[position] == "*" or input[position] == "/") and not found_operator):
             number1 = number2
             number2 = ""
-            operator = input[startingIndex]
-            go = "on"
-        # for go = "on"
-        elif ((input[startingIndex] == "*" or input[startingIndex] == "/") and go == "on"):
-            input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
-            operator = input[startingIndex]
+            operator = input[position]
+            found_operator = True
+        # for found_operator = True
+        elif ((input[position] == "*" or input[position] == "/") and found_operator):
+            input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
+            operator = input[position]
             number2 = ""
         # for *- or /- cases
-        elif (input[startingIndex] == "-" and (input[startingIndex-1] == "*" or input[startingIndex-1] == "/") and (startingIndex > 0)):
+        elif (input[position] == "-" and (input[position-1] == "*" or input[position-1] == "/") and (position > 0)):
             number2 += "-"
-        # no new * or /, resolving go = "on"
-        elif ((input[startingIndex] == "+" or input[startingIndex] == "-") and go == "on"):
-            input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
+        # no new * or /, resolving found_operator = True
+        elif ((input[position] == "+" or input[position] == "-") and found_operator):
+            input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
             number2 = ""
-            go = "off"
-        elif ((input[startingIndex] == "+" or input[startingIndex] == "-") and go == "off"):
+            found_operator = False
+        elif ((input[position] == "+" or input[position] == "-") and not found_operator):
             number2 = ""
         else:
-            # add current index to number if no operator
-            number2 += input[startingIndex]
-        startingIndex +=1
+            # add current position to number if no operator
+            number2 += input[position]
+        position +=1
     # if last operator was * or /
-    if go == "on":
-        input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
+    if found_operator:
+        input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
 
     number1 = ""
     number2 = ""
@@ -128,7 +130,7 @@ def parse(input):
         # end of recursion
         if element == ")":
             break
-        # minus at first index
+        # minus at input[0]
         elif (element == "-" and number2 == ""):
             number2 += "-"
         # first operator which also signifies first number
