@@ -10,9 +10,9 @@ import math
 index = 0
 
 # parseulation handler
-def Solver(operator, one, two):
+def solve(operator, one, two):
     # case of single operator; not giving 0 into the function (for empty second operator) 
-    # because i want len(two) to be 0 in inputcutter
+    # because i want len(two) to be 0 in replace_formula_with_result
     if two == "":
         two = 0
     one = float(one)
@@ -34,9 +34,9 @@ def Solver(operator, one, two):
     # potential reconversion to int somewhere to avoid dirty .0 ints
 
 
-def inputCutter(input, startingIndex, operator, one, two = ""):
+def replace_formula_with_result(input, startingIndex, operator, one, two = ""):
     # solve operation
-    result = Solver(operator, one, two)
+    result = solve(operator, one, two)
     # save latest position in the index
     currentIndex = startingIndex
     # we remove the operator and number(s) and instead insert the result
@@ -96,7 +96,7 @@ def parse(input):
             go = "on"
         # for go = "on"
         elif ((input[startingIndex] == "*" or input[startingIndex] == "/") and go == "on"):
-            input, startingIndex, number1 = inputCutter(input, startingIndex, operator, number1, number2)
+            input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
             operator = input[startingIndex]
             number2 = ""
         # for *- or /- cases
@@ -104,7 +104,7 @@ def parse(input):
             number2 += "-"
         # no new * or /, resolving go = "on"
         elif ((input[startingIndex] == "+" or input[startingIndex] == "-") and go == "on"):
-            input, startingIndex, number1 = inputCutter(input, startingIndex, operator, number1, number2)
+            input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
             number2 = ""
             go = "off"
         elif ((input[startingIndex] == "+" or input[startingIndex] == "-") and go == "off"):
@@ -115,7 +115,7 @@ def parse(input):
         startingIndex +=1
     # if last operator was * or /
     if go == "on":
-        input, startingIndex, number1 = inputCutter(input, startingIndex, operator, number1, number2)
+        input, startingIndex, number1 = replace_formula_with_result(input, startingIndex, operator, number1, number2)
 
     number1 = ""
     number2 = ""
@@ -138,14 +138,14 @@ def parse(input):
             operator = element
         # after that, we always add or subtract number2 unto number1
         elif (element == "+" or element == "-"):
-            number1 = Solver(operator, number1, number2)
+            number1 = solve(operator, number1, number2)
             number2 = ""
             operator = element
         else:
             number2 += element
     # last operation
     if number1 != "" and number2 != "":
-        number1 = Solver(operator, number1, number2)
+        number1 = solve(operator, number1, number2)
     # if string is a single number
     elif number2 != "":
         number1 = number2
