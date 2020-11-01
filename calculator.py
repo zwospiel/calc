@@ -1,20 +1,23 @@
 # Idea::::?:::!
 
 ## TODO for GUI: most double operators (except *-) are not allowed as input
-## TODO: sqrt sqrt oder sin sin wuerde probleme machen -> ebenfalls gui solving? ; rueckwaerts ????
+## TODO: sqrt sqrt oder sin sin wuerde probleme machen -> ebenfalls gui solving? 
+# ; rueckwaerts ????
 #?: position_of_result auf 0 setzen; wie ausserhalb der Methode?
 #?: a cute tea expert looks at your code, what you do?
 #?: multiplication: can if-flow be tidied up for better viewing? 
 # how can i improve the arrangement of my arguments?
 
 import math
-# global index to be used by the recursion; will get dynamically changed by length of the result
+# global index to be used by the recursion; will get dynamically changed
+# by length of the result
 position_of_result = 0
 
 # parseulation handler
 def solve(operator, one, two):
-    # case of single operator; not giving 0 into the function (for empty second operator) 
-    # because i want len(two) to be 0 in replace_formula_with_result
+    # case of single operator; not giving 0 into the function 
+    # (for empty second operator) 
+    #  because i want len(two) to be 0 in replace_formula_with_result
     if two == "":
         two = 0
     one = float(one)
@@ -42,9 +45,11 @@ def replace_formula_with_result(input, position, operator, one, two = ""):
     # save latest position in the position_of_result
     currentIndex = position
     # we remove the operator and number(s) and instead insert the result
-    position = position-len(one)-len(operator)-len(two)+len(result) # want to restart after the result
+    # want to restart after the result
+    position = position-len(one)-len(operator)-len(two)+len(result) 
     input = input[0:position-len(result)] + result + input[currentIndex:] 
-    return input, position, result # result returned in case of further operations
+    # result returned in case of further operations
+    return input, position, result 
     
 def parse(input):
     #?: position + index too complicated?
@@ -56,8 +61,8 @@ def parse(input):
     
     # brackets; only here are we counting position_of_result for recursion
     while position < len(input):
+        # recursion for each open bracket until first ")"
         if input[position] == "(":
-            # recursion for each open bracket until first ")"
             result = parse(input[position_of_result+1:])
             # position_of_result is counting globally, so we know where the rescursion ends 
             # and can cut up the position_of_result accordingly
