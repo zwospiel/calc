@@ -64,10 +64,13 @@ def parse(input):
         # recursion for each open bracket until first ")"
         if input[position] == "(":
             result = parse(input[position_of_result+1:])
-            # position_of_result is counting globally, so we know where the rescursion ends 
+            # position_of_result is counting globally,
+            # so we know where the rescursion ends 
             # and can cut up the position_of_result accordingly
             input = input[0:position] + result + input[position_of_result+1:]
-            position_of_result = position_of_result - (position_of_result  - len(result) - position)
+            position_of_result = position_of_result \
+                - (position_of_result  \
+                - len(result) - position)
             position += len(result)
         elif input[position] == ")":
             position = len(input)
@@ -78,7 +81,8 @@ def parse(input):
 
 
     # multiplication
-    # each number in the string is divided by an operator, which I use to identify them
+    # each number in the string is divided by an operator,
+    # which I use to identify them
 
     position = 0
     found_operator = False 
@@ -96,25 +100,40 @@ def parse(input):
             break
         # * or / : 
         # for found_operator = False
-        if ((input[position] == "*" or input[position] == "/") and not found_operator):
+        if ((input[position] == "*" or input[position] == "/") 
+            and not found_operator):
             number1 = number2
             number2 = ""
             operator = input[position]
             found_operator = True
         # for found_operator = True
-        elif ((input[position] == "*" or input[position] == "/") and found_operator):
-            input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
+        elif ((input[position] == "*" or input[position] == "/")
+            and found_operator):
+            input, position, number1 = replace_formula_with_result(
+                input,
+                position,
+                operator,
+                number1,
+                number2)
             operator = input[position]
             number2 = ""
         # for *- or /- cases
-        elif (input[position] == "-" and (input[position-1] == "*" or input[position-1] == "/") and (position > 0)):
+        elif (input[position] == "-" and (input[position-1] == "*" 
+            or input[position-1] == "/") and (position > 0)):
             number2 += "-"
         # no new * or /, resolving found_operator = True
-        elif ((input[position] == "+" or input[position] == "-") and found_operator):
-            input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
+        elif ((input[position] == "+" or input[position] == "-") 
+            and found_operator):
+            input, position, number1 = replace_formula_with_result(
+                input,
+                position,
+                operator,
+                number1,
+                number2)
             number2 = ""
             found_operator = False
-        elif ((input[position] == "+" or input[position] == "-") and not found_operator):
+        elif ((input[position] == "+" or input[position] == "-")
+            and not found_operator):
             number2 = ""
         else:
             # add current position to number if no operator
@@ -122,7 +141,12 @@ def parse(input):
         position +=1
     # if last operator was * or /
     if found_operator:
-        input, position, number1 = replace_formula_with_result(input, position, operator, number1, number2)
+        input, position, number1 = replace_formula_with_result(
+            input, 
+            position, 
+            operator, 
+            number1, 
+            number2)
 
     number1 = ""
     number2 = ""
