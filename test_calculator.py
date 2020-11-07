@@ -1,5 +1,5 @@
-from calculator import parse
 import unittest
+from calculator import parse
 
 def call_parse(formula):
   return parse(formula)
