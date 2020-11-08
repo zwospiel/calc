@@ -25,9 +25,6 @@ class invalid_inputs(unittest.TestCase):
         self.assertRaises(ValueError, call_parse, "3+4)")
         self.assertRaises(ValueError, call_parse, "(3+4))")
         self.assertRaises(ValueError, call_parse, "((3+4)")
-        self.assertRaises(ValueError, call_parse, "3(+)4")
-        self.assertRaises(ValueError, call_parse, "(3+)4")
-        self.assertRaises(ValueError, call_parse, "3(+4)")
 
 
 class single_number_inputs(unittest.TestCase):
