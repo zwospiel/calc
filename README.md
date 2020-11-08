@@ -9,6 +9,7 @@
 
 ## Education
 * [Pro Git Book](https://git-scm.com/book/en/v2)
+* [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
 - [MIT Missing Semester](https://missing.csail.mit.edu/)
   * [Version Control](https://missing.csail.mit.edu/2020/version-control/)
 * [Socratica: Python Programming Tutorials](https://www.youtube.com/watch?v=bY6m6_IIN94&list=PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-)
