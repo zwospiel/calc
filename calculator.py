@@ -52,6 +52,7 @@ def replace_formula_with_result(input, position, operator, one, two = ""):
     return input, position, result 
 
 def parse(input):
+    validate(input)
     return main(input)
     
 def main(input):
@@ -184,3 +185,17 @@ def main(input):
     elif number2 != "":
         number1 = number2
     return number1
+
+
+def validate(input):
+    if type(input) is not str:
+        raise TypeError("Input not a string")
+
+    if input == "":
+        raise ValueError("Input string must not empty")
+
+    i = 0
+    while i < len(input):
+        if input[i] == ",":
+            raise ValueError("Fractions must be divided by '.' and not ','")
+        i += 1
