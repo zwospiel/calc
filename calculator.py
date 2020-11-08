@@ -52,6 +52,9 @@ def replace_formula_with_result(input, position, operator, one, two = ""):
     return input, position, result 
 
 def parse(input):
+    global position_of_result
+    position_of_result = 0
+    
     validate(input)
     return main(input)
     
