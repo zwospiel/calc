@@ -17,14 +17,17 @@ class invalid_inputs(unittest.TestCase):
         self.assertRaises(ValueError, call_parse, "3,14")
 
     def test_that_incorrect_parenthesis_raise_value_errors(self):
-        incorrect_parenthesis = [
-          "(", ")", "())", "(()",
-          "(3+4", "3+4)", "(3+4))", "((3+4)",
-          "3(+)4", "(3+)4", "(3+)4"
-        ]
-
-        for input in incorrect_parenthesis:
-            self.assertRaises(ValueError, call_parse, input)
+        self.assertRaises(ValueError, call_parse, "(")
+        self.assertRaises(ValueError, call_parse, ")")
+        self.assertRaises(ValueError, call_parse, "())")
+        self.assertRaises(ValueError, call_parse, "(()")
+        self.assertRaises(ValueError, call_parse, "(3+4")
+        self.assertRaises(ValueError, call_parse, "3+4)")
+        self.assertRaises(ValueError, call_parse, "(3+4))")
+        self.assertRaises(ValueError, call_parse, "((3+4)")
+        self.assertRaises(ValueError, call_parse, "3(+)4")
+        self.assertRaises(ValueError, call_parse, "(3+)4")
+        self.assertRaises(ValueError, call_parse, "3(+4)")
 
 
 class single_number_inputs(unittest.TestCase):
