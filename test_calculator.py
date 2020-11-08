@@ -16,7 +16,7 @@ class invalid_inputs(unittest.TestCase):
     def test_that_commas_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "3,14")
 
-    def test_that_incorrect_parentheses_raise_value_errors(self):
+    def test_that_unbalanced_parentheses_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "(")
         self.assertRaises(ValueError, call_parse, ")")
         self.assertRaises(ValueError, call_parse, "())")
