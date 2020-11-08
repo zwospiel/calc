@@ -50,8 +50,15 @@ def replace_formula_with_result(input, position, operator, one, two = ""):
     input = input[0:position-len(result)] + result + input[currentIndex:] 
     # result returned in case of further operations
     return input, position, result 
-    
+
 def parse(input):
+    global position_of_result
+    position_of_result = 0
+    
+    validate(input)
+    return main(input)
+    
+def main(input):
     #?: position + index too complicated?
     global position_of_result
     number1 = ""
@@ -63,7 +70,7 @@ def parse(input):
     while position < len(input):
         # recursion for each open bracket until first ")"
         if input[position] == "(":
-            result = parse(input[position_of_result+1:])
+            result = main(input[position_of_result+1:])
             # position_of_result is counting globally,
             # so we know where the rescursion ends 
             # and can cut up the position_of_result accordingly
@@ -181,3 +188,17 @@ def parse(input):
     elif number2 != "":
         number1 = number2
     return number1
+
+
+def validate(input):
+    if type(input) is not str:
+        raise TypeError("Input not a string")
+
+    if input == "":
+        raise ValueError("Input string must not empty")
+
+    i = 0
+    while i < len(input):
+        if input[i] == ",":
+            raise ValueError("Fractions must be divided by '.' and not ','")
+        i += 1
