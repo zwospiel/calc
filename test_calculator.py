@@ -16,7 +16,7 @@ class invalid_inputs(unittest.TestCase):
     def test_that_commas_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "3,14")
 
-    def test_that_incorrect_parenthesis_raise_value_errors(self):
+    def test_that_incorrect_parentheses_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "(")
         self.assertRaises(ValueError, call_parse, ")")
         self.assertRaises(ValueError, call_parse, "())")
@@ -46,10 +46,10 @@ class single_number_inputs(unittest.TestCase):
 
 
 class redundant_parenthesis(unittest.TestCase):
-    def test_that_single_redudant_parenthesis_get_resolved(self):
+    def test_that_single_redudant_parentheses_get_resolved(self):
         self.assertEqual(call_parse("(34)"), "34")
 
-    def test_that_multiple_redudant_parenthesis_get_resolved(self):
+    def test_that_multiple_redudant_parentheses_get_resolved(self):
         self.assertEqual(call_parse("(((34)))"), "34")
 
 
