@@ -197,8 +197,5 @@ def validate(input):
     if input == "":
         raise ValueError("Input string must not empty")
 
-    i = 0
-    while i < len(input):
-        if input[i] == ",":
-            raise ValueError("Fractions must be divided by '.' and not ','")
-        i += 1
+    if "," in input:
+        raise ValueError("No commata allowed")
