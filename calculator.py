@@ -1,23 +1,14 @@
-# Idea::::?:::!
-
-## TODO for GUI: most double operators (except *-) are not allowed as input
-## TODO: sqrt sqrt oder sin sin wuerde probleme machen -> ebenfalls gui solving? 
-# ; rueckwaerts ????
-#?: position_of_result auf 0 setzen; wie ausserhalb der Methode?
-#?: a cute tea expert looks at your code, what you do?
-#?: multiplication: can if-flow be tidied up for better viewing? 
-# how can i improve the arrangement of my arguments?
-
 import math
-# global index to be used by the recursion; will get dynamically changed
-# by length of the result
+
+# global index to be used by the recursion
+# will get dynamically changed by length of the result
 position_of_result = 0
 
-# parseulation handler
+
 def solve(operator, one, two):
     # case of single operator; not giving 0 into the function 
     # (for empty second operator) 
-    #  because i want len(two) to be 0 in replace_formula_with_result
+    # because i want len(two) to be 0 in replace_formula_with_result
     if two == "":
         two = 0
     one = float(one)
@@ -36,11 +27,9 @@ def solve(operator, one, two):
         return str(one+two)
     if operator == "-":
         return str(one-two)
-    # potential reconversion to int somewhere to avoid dirty .0 ints
 
 
 def replace_formula_with_result(input, position, operator, one, two = ""):
-    # solve operation
     result = solve(operator, one, two)
     # save latest position in the position_of_result
     currentIndex = position
@@ -51,6 +40,7 @@ def replace_formula_with_result(input, position, operator, one, two = ""):
     # result returned in case of further operations
     return input, position, result 
 
+
 def parse(input):
     global position_of_result
     position_of_result = 0
@@ -58,15 +48,16 @@ def parse(input):
     validate(input)
     return main(input)
     
+
 def main(input):
-    #?: position + index too complicated?
     global position_of_result
     number1 = ""
     number2 = ""
     operator = ""
     position = 0
     
-    # brackets; only here are we counting position_of_result for recursion
+    # brackets
+    # only here are we counting position_of_result for recursion
     while position < len(input):
         # recursion for each open bracket until first ")"
         if input[position] == "(":
@@ -92,9 +83,10 @@ def main(input):
     # which I use to identify them
 
     position = 0
-    found_operator = False 
     # if we have read a * or /, we will do an calculation after the next number
     # specified by found_operator = True
+    found_operator = False 
+    
     
     # leading minus in the first position
     if (input[position] == "-" and number1 == "" and number2 == ""):
@@ -102,7 +94,6 @@ def main(input):
         position+=1
 
     while position < len(input):
-        # end of recursion
         if input[position] == ")":
             break
         # * or / : 
@@ -146,7 +137,7 @@ def main(input):
             # add current position to number if no operator
             number2 += input[position]
         position +=1
-    # if last operator was * or /
+    # cleanup if last operator was * or /
     if found_operator:
         input, position, number1 = replace_formula_with_result(
             input, 
@@ -163,10 +154,9 @@ def main(input):
     # no other operators than + or - left, so we can simply add all the numbers
 
     for element in input:
-        # end of recursion
         if element == ")":
             break
-        # minus at input[0]
+        # leading minus
         elif (element == "-" and number2 == ""):
             number2 += "-"
         # first operator which also signifies first number
@@ -202,6 +192,7 @@ def validate(input):
     
     if not parentheses_are_balanced(input):
         raise ValueError("Unbalanced parentheses")
+
 
 def parentheses_are_balanced(input):
     unclosed_parenthesis_count = 0
