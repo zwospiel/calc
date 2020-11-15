@@ -199,3 +199,18 @@ def validate(input):
 
     if "," in input:
         raise ValueError("No commata allowed")
+    
+    if not parentheses_are_balanced(input):
+        raise ValueError("Unbalanced parentheses")
+
+def parentheses_are_balanced(input):
+    unclosed_parenthesis_count = 0
+    for c in input:
+        if c == "(":
+            unclosed_parenthesis_count += 1
+        if c == ")":
+            unclosed_parenthesis_count -= 1
+        if unclosed_parenthesis_count < 0:
+            return False
+
+    return unclosed_parenthesis_count == 0
