@@ -5,42 +5,6 @@ import math
 position_of_result = 0
 
 
-def solve(operator, one, two):
-    # case of single operator; not giving 0 into the function 
-    # (for empty second operator) 
-    # because i want len(two) to be 0 in replace_formula_with_result
-    if two == "":
-        two = 0
-    one = float(one)
-    two = float(two)
-    if operator == "sqrt":
-        return str(sqrt(one))
-    if operator == "sin":
-        return str(sin(one))
-    if operator == "^":
-        return str(one**two)
-    if operator == "*":
-        return str(one*two)
-    if operator == "/":
-        return str(one/two)
-    if operator == "+":
-        return str(one+two)
-    if operator == "-":
-        return str(one-two)
-
-
-def replace_formula_with_result(input, position, operator, one, two = ""):
-    result = solve(operator, one, two)
-    # save latest position in the position_of_result
-    currentIndex = position
-    # we remove the operator and number(s) and instead insert the result
-    # want to restart after the result
-    position = position-len(one)-len(operator)-len(two)+len(result) 
-    input = input[0:position-len(result)] + result + input[currentIndex:] 
-    # result returned in case of further operations
-    return input, position, result 
-
-
 def parse(input):
     global position_of_result
     position_of_result = 0
@@ -178,6 +142,42 @@ def main(input):
     elif number2 != "":
         number1 = number2
     return number1
+
+
+def replace_formula_with_result(input, position, operator, one, two = ""):
+    result = solve(operator, one, two)
+    # save latest position in the position_of_result
+    currentIndex = position
+    # we remove the operator and number(s) and instead insert the result
+    # want to restart after the result
+    position = position-len(one)-len(operator)-len(two)+len(result) 
+    input = input[0:position-len(result)] + result + input[currentIndex:] 
+    # result returned in case of further operations
+    return input, position, result 
+
+
+def solve(operator, one, two):
+    # case of single operator; not giving 0 into the function 
+    # (for empty second operator) 
+    # because i want len(two) to be 0 in replace_formula_with_result
+    if two == "":
+        two = 0
+    one = float(one)
+    two = float(two)
+    if operator == "sqrt":
+        return str(sqrt(one))
+    if operator == "sin":
+        return str(sin(one))
+    if operator == "^":
+        return str(one**two)
+    if operator == "*":
+        return str(one*two)
+    if operator == "/":
+        return str(one/two)
+    if operator == "+":
+        return str(one+two)
+    if operator == "-":
+        return str(one-two)
 
 
 def validate(input):
