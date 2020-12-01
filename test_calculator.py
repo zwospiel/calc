@@ -32,17 +32,17 @@ class invalid_inputs(unittest.TestCase):
         self.assertRaises(ValueError, call_parse, "2*)3+4(*5")
 
 
-class single_number_inputs(unittest.TestCase):
-    def test_that_single_digit_integers_return_themselves(self):
+class single_numbers(unittest.TestCase):
+    def test_parsing_of_single_digit_integers(self):
         self.assertEqual(call_parse("3"), "3")
 
-    def test_that_multi_digit_integers_return_themselves(self):
+    def test_parsing_of_multi_digit_integers(self):
         self.assertEqual(call_parse("12"), "12")
 
-    def test_that_rational_numbers_return_themselves(self):
+    def test_parsing_of_rational_numbers(self):
         self.assertEqual(call_parse("3.14"), "3.14")
 
-    def test_that_negative_numbers_return_themselves(self):
+    def test_parsing_of_negative_numbers(self):
         self.assertEqual(call_parse("-1"), "-1")
         self.assertEqual(call_parse("-34"), "-34")
         self.assertEqual(call_parse("-2.72"), "-2.72")
