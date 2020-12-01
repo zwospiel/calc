@@ -48,12 +48,18 @@ class single_numbers(unittest.TestCase):
         self.assertEqual(call_parse("-2.72"), "-2.72")
 
 
-class redundant_parenthesis(unittest.TestCase):
-    def test_that_single_redudant_parentheses_get_resolved(self):
-        self.assertEqual(call_parse("(34)"), "34")
-
-    def test_that_multiple_redudant_parentheses_get_resolved(self):
+class nesting(unittest.TestCase):
+    def test_redudant_parentheses(self):
         self.assertEqual(call_parse("(((34)))"), "34")
+
+    def test_nesting(self):
+        self.assertEqual(call_parse("(3+4)*2"), "14.0")
+
+    def test_deep_nesting(self):
+        self.assertEqual(call_parse("(2*(3+4))*2"), "28.0")
+
+    def test_parallel_nesting(self):
+        self.assertEqual(call_parse("(3+4)*(2+5)"), "49.0")
 
 
 if __name__ == '__main__':
