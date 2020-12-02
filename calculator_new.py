@@ -42,4 +42,27 @@ def replace(string, start, end, replacement):
 
 
 def validate(formula):
-    return
+    if type(formula) is not str:
+        raise TypeError("Formula must be a string")
+
+    if formula == "":
+        raise ValueError("Formula must not be empty")
+
+    if "," in formula:
+        raise ValueError("Formula must not contain commas")
+    
+    if not parentheses_are_balanced(formula):
+        raise ValueError("Formula contains unbalanced parentheses")
+
+
+def parentheses_are_balanced(formula):
+    unclosed_parenthesis_count = 0
+    for c in formula:
+        if c == "(":
+            unclosed_parenthesis_count += 1
+        if c == ")":
+            unclosed_parenthesis_count -= 1
+        if unclosed_parenthesis_count < 0:
+            return False
+
+    return unclosed_parenthesis_count == 0
