@@ -2,9 +2,9 @@ def parse(formula):
     validate(formula)
     if(is_solvable(formula)):
         return solve(formula)
-    start, end = find_partial_formula(parse(formula))
+    start, end = find_partial_formula(formula)
     partial_result = parse(formula[start:end])
-    return replace(formula, start, end, partial_result)
+    return parse(replace(formula, start, end, partial_result))
 
 
 def is_solvable(formula):
