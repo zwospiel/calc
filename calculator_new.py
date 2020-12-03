@@ -35,8 +35,8 @@ def replace(string, start, end, replacement):
         The original string and the replacement for the defined substring.
     start, end:
         The positions in the original that define the substring to replace.
-        Both are inclusive, that means replace("my_black_tea", 3, 7, "red") 
-        will return "my_red_tea".
+        Starting at string[start] and ending at string[end - 1], 
+        meaning replace("my_black_tea", 3, 8, "red") will return "my_red_tea".
     """
     return
 
