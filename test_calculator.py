@@ -17,7 +17,7 @@ class invalid_inputs(unittest.TestCase):
     def test_that_commas_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "3,14")
 
-    def test_that_uneven_parentheses_raise_value_errors(self):
+    def test_that_uneven_parens_raise_value_errors(self):
         self.assertRaises(ValueError, call_parse, "(")
         self.assertRaises(ValueError, call_parse, ")")
         self.assertRaises(ValueError, call_parse, "())")
@@ -27,7 +27,7 @@ class invalid_inputs(unittest.TestCase):
         self.assertRaises(ValueError, call_parse, "(3+4))")
         self.assertRaises(ValueError, call_parse, "((3+4)")
 
-    def test_that_incorrectly_nested_parentheses_raise_value_errors(self):
+    def test_that_incorrect_nesting_raises_value_errors(self):
         self.assertRaises(ValueError, call_parse, ")3+4(")
         self.assertRaises(ValueError, call_parse, "2*)3+4(*5")
 
@@ -123,7 +123,7 @@ class division(unittest.TestCase):
 
 
 class operator_precedence(unittest.TestCase):
-    def test_that_point_calculation_comes_before_line_calculation(self):
+    def test_that_point_comes_before_line_calculation(self):
         self.assertEqual(call_parse("2+3*4"), "14.0")
         self.assertEqual(call_parse("2-3*4"), "-10.0")
         self.assertEqual(call_parse("2+12/3"), "6.0")
